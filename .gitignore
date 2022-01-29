@@ -8,3 +8,5 @@ build
 *.iml
 *.dat
 *.properties
+.DS_Store
+.gradle
