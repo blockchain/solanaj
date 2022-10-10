@@ -32,7 +32,7 @@ dependencies {
 }
 
 group = 'org.p2p'
-version = '1.6-BC4'
+version = '1.6-BC5'
 description = 'solanaj'
 sourceCompatibility = '11'
 
