@@ -79,6 +79,17 @@ public class ConfirmedTransaction {
 
     @Getter
     @ToString
+    public static class LoadedAddresses {
+
+        @Json(name = "writable")
+        private List<String> writable;
+
+        @Json(name = "readonly")
+        private List<String> readonly;
+    }
+
+    @Getter
+    @ToString
     public static class Meta {
 
         @Json(name = "err")
@@ -104,6 +115,9 @@ public class ConfirmedTransaction {
 
         @Json(name = "status")
         private Status status;
+
+        @Json(name = "loadedAddresses")
+        private LoadedAddresses loadedAddresses;
     }
 
     @Getter
