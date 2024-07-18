@@ -690,4 +690,16 @@ public class MainnetTest extends AccountBasedTest {
         assertNotNull(accounts);
         assertEquals(2, accounts.size());
     }
+
+    @Test
+    public void getTransactionTest() throws RpcException {
+        Map<String, Object> optionalParams = Map.of("maxSupportedTransactionVersion", 0, "commitment", Commitment.CONFIRMED);
+        ConfirmedTransaction transaction = client.getApi().getTransaction(
+                "35aekh1vFiUtnYBgtkhnKfJwqtKyTTz2uEUfVFsZu8biSFcS1V9TZUa42wQZ3gqR1rcRCCFAQreEQhScmqVZccKK",
+                optionalParams
+        );
+
+        assertNotNull(transaction);
+        assertEquals(transaction.getTransaction().getMessage().getInstructions().size(), 5);
+    }
 }
