@@ -73,6 +73,9 @@ public class ConfirmedTransaction {
         @Json(name = "mint")
         private String mint;
 
+        @Json(name = "owner")
+        private String owner;
+
         @Json(name = "uiTokenAmount")
         private TokenResultObjects.TokenAmountInfo uiTokenAmount;
     }
