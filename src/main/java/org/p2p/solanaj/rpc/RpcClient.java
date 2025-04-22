@@ -24,8 +24,14 @@ import javax.net.ssl.*;
 
 class XAuthTokenInterceptor implements Interceptor {
     private String authToken;
+    private String headerName = "X-Auth-Token";
 
     public XAuthTokenInterceptor(String authToken) {
+        this.authToken = authToken;
+    }
+
+    public XAuthTokenInterceptor(String authToken, String headerName) {
+        this.headerName = headerName;
         this.authToken = authToken;
     }
 
@@ -34,7 +40,7 @@ class XAuthTokenInterceptor implements Interceptor {
         Request.Builder builder = chain.request().newBuilder();
 
         if (authToken != null && !authToken.isEmpty()) {
-            builder.addHeader("X-Auth-Token", authToken);
+            builder.addHeader(headerName, authToken);
         }
 
         return chain.proceed(builder.build());
@@ -62,6 +68,16 @@ public class RpcClient {
                 .readTimeout(20, TimeUnit.SECONDS)
                 //.addInterceptor(new LoggingInterceptor())
                 .addInterceptor(new XAuthTokenInterceptor(authToken))
+                .build();
+        rpcApi = new RpcApi(this);
+    }
+
+    public RpcClient(String endpoint, String authToken, String headerName) {
+        this.endpoint = endpoint;
+        this.httpClient = new OkHttpClient.Builder()
+                .readTimeout(20, TimeUnit.SECONDS)
+                //.addInterceptor(new LoggingInterceptor())
+                .addInterceptor(new XAuthTokenInterceptor(authToken, headerName))
                 .build();
         rpcApi = new RpcApi(this);
     }
