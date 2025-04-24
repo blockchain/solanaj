@@ -7,6 +7,7 @@ import org.p2p.solanaj.core.PublicKey;
 import org.p2p.solanaj.core.Transaction;
 import org.p2p.solanaj.rpc.types.*;
 import org.p2p.solanaj.rpc.types.config.BlockConfig;
+import org.p2p.solanaj.rpc.types.config.TransactionConfig;
 import org.p2p.solanaj.rpc.types.ConfirmedSignFAddr2;
 import org.p2p.solanaj.rpc.types.DataSize;
 import org.p2p.solanaj.rpc.types.Filter;
@@ -119,6 +120,26 @@ public class RpcApi {
         }
 
         return client.call("getBalance", params, ValueLong.class).getValue();
+    }
+
+    public ConfirmedTransaction getTransaction(String signature, Map<String, Object> optionalParams) throws RpcException {
+        List<Object> params = new ArrayList<Object>();
+
+        params.add(signature);
+
+        if (null != optionalParams) {
+            TransactionConfig transactionConfig = new TransactionConfig();
+            if (optionalParams.containsKey("commitment")) {
+                Commitment commitment = (Commitment) optionalParams.get("commitment");
+                transactionConfig.setCommitment(commitment.getValue());
+            }
+            if (optionalParams.containsKey("maxSupportedTransactionVersion")) {
+                transactionConfig.setMaxSupportedTransactionVersion((int) optionalParams.get("maxSupportedTransactionVersion"));
+            }
+            params.add(transactionConfig);
+        }
+
+        return client.call("getTransaction", params, ConfirmedTransaction.class);
     }
 
     public ConfirmedTransaction getConfirmedTransaction(String signature) throws RpcException {

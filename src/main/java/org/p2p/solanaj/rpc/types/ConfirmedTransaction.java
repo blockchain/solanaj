@@ -73,8 +73,22 @@ public class ConfirmedTransaction {
         @Json(name = "mint")
         private String mint;
 
+        @Json(name = "owner")
+        private String owner;
+
         @Json(name = "uiTokenAmount")
         private TokenResultObjects.TokenAmountInfo uiTokenAmount;
+    }
+
+    @Getter
+    @ToString
+    public static class LoadedAddresses {
+
+        @Json(name = "writable")
+        private List<String> writable;
+
+        @Json(name = "readonly")
+        private List<String> readonly;
     }
 
     @Getter
@@ -104,6 +118,9 @@ public class ConfirmedTransaction {
 
         @Json(name = "status")
         private Status status;
+
+        @Json(name = "loadedAddresses")
+        private LoadedAddresses loadedAddresses;
     }
 
     @Getter
